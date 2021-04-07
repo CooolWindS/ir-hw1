@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='result.css') }}">
+
+    <title>SongSearch</title>
+</head>
+<body>
+    <div class="container">
+        <img class="mic-img" src='/static/mic.png'>
+		<div class="wrap">
+            <form action="/result" method="GET">
+                <div class="search">
+                    <input type="text" class="searchTerm" name='search' placeholder="What are you looking for?" value="{{ search_string }}" required>
+                    <button type="submit" class="searchButton">Search</button>
+                </div>
+            </form>
+            <br>
+            <table>
+                <tbody>
+                    {% if result_list %}
+
+                    <p> 共 {{ result_list | count }} 項結果 </p>
+                    
+                    {% for row in result_list %}
+                    <tr>
+                        <a class="title" href="{{ url_for('song', song_id=row.id) }}">{{ row.title }}</a>
+                        <p class="content">
+                            {%- for i in range(row.mark_length) -%}
+                                {%- if i is odd -%}
+                                    <em>{{ row.mark_list[i] }}</em>
+                                {%- else -%}
+                                    {{ row.mark_list[i] }}
+                                {%- endif -%}
+                            {%- endfor -%}
+                        </p>
+                    </tr>
+                    {% endfor %}
+                    
+                    {% else %}
+                    <p></p>
+                    <p class='p-inline'> 找不到符合搜尋字詞「</p> <p class='p-inline p-red'>{{ search_string }}</p> <p class='p-inline'>」的文件。 </p>
+                    <p> 建議： </p>
+                    <li>請檢查有無錯別字</li>
+                    <li>試試以其他關鍵字搜尋。</li>
+                    <li>試試以較籠統的關鍵字搜尋。</li>
+                    {% endif %}
+                </tbody>
+            </table>
+         </div>
+	</div>
+</body>
+</html>
