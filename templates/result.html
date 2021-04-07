@@ -13,7 +13,7 @@
 		<div class="wrap">
             <form action="/result" method="GET">
                 <div class="search">
-                    <input type="text" class="searchTerm" name='search' placeholder="What are you looking for?" value="{{ search_string }}" required>
+                    <input type="text" class="searchTerm" name='search' placeholder="What are you looking for?" value="{{ search_string }}" maxlength="64" required>
                     <button type="submit" class="searchButton">Search</button>
                 </div>
             </form>
